@@ -57,7 +57,7 @@ li {
   &.disabled,
   &.disabled > span,
   &.optgroup {
-    color: rgba(#000, .3);
+    color: rgba(#000, 0.3);
     cursor: context-menu;
     background-color: transparent !important;
   }
@@ -70,8 +70,8 @@ li {
   & > a,
   & > span {
     display: block;
-    padding: .5rem;
-    font-size: .9rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
     color: #4285f4;
   }
 }

@@ -82,7 +82,8 @@ input[type="search-md"] {
   border-radius: 0;
   outline: 0;
   box-shadow: none;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
   width: 100%;
 }
 input:read-only {
@@ -95,7 +96,8 @@ input:read-only {
   background-color: transparent;
   border-radius: 0;
 }
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled,
+.form-control[readonly] {
   background-color: transparent;
   border-bottom: 1px solid #bdbdbd;
 }

@@ -317,13 +317,13 @@ export default class Select extends Vue {
 
   span.caret {
     position: absolute;
-    top: .8rem;
+    top: 0.8rem;
     right: 0;
-    font-size: .63rem;
+    font-size: 0.63rem;
     color: #495057;
 
     &.disabled {
-      color: rgba(0, 0, 0, .3);
+      color: rgba(0, 0, 0, 0.3);
     }
   }
 }
