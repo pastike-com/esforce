@@ -1,0 +1,42 @@
+{
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "dependencies": {
+    "core-js": "^3.4.0",
+    "vue": "^2.0.0",
+    "vue-class": "^2.0.0",
+    "vue-class-component": "^7.0.0",
+    "vue-property-decorator": "^9.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/parser": "^4.0.0",
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-eslint": "^4.0.0",
+    "@vue/cli-plugin-typescript": "^4.0.0",
+    "@vue/cli-service": "^4.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^6.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-vue": "^6.0.0",
+    "generate-changelog": "^1.0.0",
+    "node-sass": "^4.0.0",
+    "prettier": "^2.0.0",
+    "sass-loader": "^8.0.0",
+    "typescript": "^4.0.2",
+    "vue-template-compiler": "^2.0.0"
+  },
+  "name": "esforce",
+  "private": true,
+  "scripts": {
+    "changelog": "changelog generate",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "version": "0.0.0"
+}
