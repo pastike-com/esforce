@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  esforce:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    ports:
+      - '80:80'
+      - '8080:8080'
+    volumes:
+      - '.:/opt/app/'
+      - './dist:/var/www/html/'
