@@ -311,4 +311,20 @@ export default class Select extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.select-wrapper {
+  position: relative;
+
+  span.caret {
+    position: absolute;
+    top: .8rem;
+    right: 0;
+    font-size: .63rem;
+    color: #495057;
+
+    &.disabled {
+      color: rgba(0, 0, 0, .3);
+    }
+  }
+}
+</style>

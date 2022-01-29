@@ -41,4 +41,27 @@ export default class SelectOptions extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.select-dropdown {
+  &:focus {
+    border-bottom: 1px solid #4285f4;
+    box-shadow: 0 1px 0 0 #4285f4;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+.dropdown-content {
+  z-index: 1021;
+  min-width: 6.25rem;
+  //max-height: 40.625rem;
+  margin: 0;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  will-change: width, height;
+}
+</style>

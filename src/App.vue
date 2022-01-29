@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Select v-model="basicOptions" placeholder="Select an option" />
+    <Select v-model="basicOptions" placeholder="Select an option" style="width: 300px; margin: 20px;" />
   </div>
 </template>
 

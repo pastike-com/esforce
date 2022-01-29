@@ -9,8 +9,6 @@
     @click="select"
     @keydown.enter.stop="select(true)"
     @keydown.space.stop="select"
-    @mouseleave="hover = false"
-    @mouseover="hover = true"
   >
     <span class="filtrable" :data-value="value">
       <slot></slot>
@@ -32,8 +30,6 @@ export default class SelectOption extends Vue {
   @Prop({ type: String })
   readonly value!: string;
 
-  private hover = false;
-
   get className(): string[] {
     return [
       this.disabled ? "disabled" : "",
@@ -48,4 +44,35 @@ export default class SelectOption extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+li {
+  width: 100%;
+  clear: both;
+  line-height: 1.3rem;
+  color: #000;
+  text-align: left;
+  text-transform: none;
+  cursor: pointer;
+
+  &.disabled,
+  &.disabled > span,
+  &.optgroup {
+    color: rgba(#000, .3);
+    cursor: context-menu;
+    background-color: transparent !important;
+  }
+
+  &:hover,
+  &.active {
+    background-color: #eee;
+  }
+
+  & > a,
+  & > span {
+    display: block;
+    padding: .5rem;
+    font-size: .9rem;
+    color: #4285f4;
+  }
+}
+</style>
