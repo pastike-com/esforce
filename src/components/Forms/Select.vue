@@ -1,6 +1,6 @@
 <template>
   <div class="select-outer">
-    <div class="select-wrapper es-form" @mousedown="away">
+    <div class="select-wrapper es-form" v-click-outside.mousedown="away">
       <span :class="caretClasses">{{ toggle ? "▲" : "▼" }}</span>
       <SelectInput
         ref="input"
@@ -10,7 +10,7 @@
         :text="inputText"
         :toggle="toggle"
         :value="inputValue"
-        @active="toggle = true"
+        @active="focused = true"
         @keydown.native.stop="handleKeydown"
         @mousedown.native.left="toggleOptions"
       />
@@ -65,6 +65,8 @@ export default class Select extends Vue {
   private activeOption = 0;
 
   private defaultIndex = 0;
+
+  private focused = false;
 
   private id = "";
 
