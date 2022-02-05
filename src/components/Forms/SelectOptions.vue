@@ -55,9 +55,11 @@ export default class SelectOptions extends Vue {
 }
 
 .dropdown-content {
+  position: absolute;
   z-index: 1021;
   min-width: 6.25rem;
   //max-height: 40.625rem;
+  width: 100%;
   margin: 0;
   overflow-y: auto;
   background-color: #fff;

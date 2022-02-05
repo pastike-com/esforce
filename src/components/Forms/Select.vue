@@ -56,13 +56,18 @@ export default class Select extends Vue {
   @Prop({ default: false, type: Boolean })
   readonly disabled?: boolean;
 
+  @Prop({ required: true, type: [Array, Object] })
+  readonly options!: ISelectOption[] | string[] | object; // eslint-disable-line @typescript-eslint/ban-types
+
   @Prop({ type: String })
   readonly placeholder?: string;
 
   @ModelSync("value", "input", { required: true, type: Array })
-  readonly data!: ISelectOption[];
+  readonly selected!: string[];
 
   private activeOption = 0;
+
+  private data: ISelectOption[] = [];
 
   private defaultIndex = 0;
 
@@ -81,6 +86,8 @@ export default class Select extends Vue {
   private toggle = false;
 
   created() {
+    this.setData();
+
     this.setSelected();
 
     this.checkDefaultData();
@@ -159,12 +166,16 @@ export default class Select extends Vue {
     this.data.forEach((option) => {
       option.selected = false;
     });
+    this.selected.splice(0, this.selected.length);
+
     this.$set(
       // @ts-ignore
       this.data.find((x) => x.value === value),
       "selected",
       true
     );
+    this.selected.push(value);
+
     this.inputValue = value;
     this.inputText = text;
 
@@ -266,6 +277,44 @@ export default class Select extends Vue {
     this.selectFirstAvailableOption();
     this.inputValue = this.data.find((x) => x.selected === true)?.value || null;
     this.inputText = this.data.find((x) => x.selected === true)?.text || "";
+  }
+
+  public setData(): void {
+    if (Array.isArray(this.options)) {
+      this.options.forEach((item) => {
+        if (typeof item === "object") {
+          if ("text" in item && "value" in item) {
+            this.data.push({
+              text: item.text,
+              value: item.value,
+            });
+          }
+        } else {
+          this.data.push({
+            text: String(item),
+            value: String(item),
+          });
+        }
+      });
+    } else if (typeof this.options === "object") {
+      Object.keys(this.options).forEach((index) => {
+        // @ts-ignore
+        const item = this.options[index];
+        if (typeof item === "object") {
+          if ("text" in item && "value" in item) {
+            this.data.push({
+              text: item.text,
+              value: item.value,
+            });
+          }
+        } else {
+          this.data.push({
+            text: String(item),
+            value: String(item),
+          });
+        }
+      });
+    }
   }
 
   public setSelected(): void {
