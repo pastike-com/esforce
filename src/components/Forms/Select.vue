@@ -1,39 +1,53 @@
 <template>
   <div class="select-outer">
     <div class="select-wrapper es-form" v-click-outside.mousedown="away">
-      <span :class="caretClasses">{{ toggle ? "▲" : "▼" }}</span>
-      <SelectInput
-        ref="input"
-        :aria-owns="id"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        :text="inputText"
-        :toggle="toggle"
-        :value="inputValue"
-        @active="focused = true"
-        @keydown.native.stop="handleKeydown"
-        @mousedown.native.left="toggleOptions"
-      />
-      <keep-alive>
-        <SelectOptions
-          class="collapse-item"
-          :id="id"
-          :show="toggle"
-          @close="handleEscClose"
-        >
-          <SelectOption
+      <template v-if="touch">
+        <select v-model="touchSelected">
+          <option value="" disabled selected hidden>{{ placeholder }}</option>
+          <option
             v-for="(option, index) in data"
             :key="index"
-            ref="option"
             :value="option.value"
-            :active="option.selected"
-            @select="getSelectedOption"
-            @keydown.native.prevent="navigateOptions($event)"
           >
             {{ option.text }}
-          </SelectOption>
-        </SelectOptions>
-      </keep-alive>
+          </option>
+        </select>
+      </template>
+      <template v-else>
+        <span :class="caretClasses">{{ toggle ? "▲" : "▼" }}</span>
+        <SelectInput
+          ref="input"
+          :aria-owns="id"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          :text="inputText"
+          :toggle="toggle"
+          :value="inputValue"
+          @active="focused = true"
+          @keydown.native.stop="handleKeydown"
+          @mousedown.native.left="toggleOptions"
+        />
+        <keep-alive>
+          <SelectOptions
+            class="collapse-item"
+            :id="id"
+            :show="toggle"
+            @close="handleEscClose"
+          >
+            <SelectOption
+              v-for="(option, index) in data"
+              :key="index"
+              ref="option"
+              :value="option.value"
+              :active="option.selected"
+              @select="getSelectedOption"
+              @keydown.native.prevent="navigateOptions($event)"
+            >
+              {{ option.text }}
+            </SelectOption>
+          </SelectOptions>
+        </keep-alive>
+      </template>
     </div>
   </div>
 </template>
@@ -85,6 +99,10 @@ export default class Select extends Vue {
 
   private toggle = false;
 
+  private touch = true;
+
+  private touchSelected = "";
+
   created() {
     this.setData();
 
@@ -97,6 +115,8 @@ export default class Select extends Vue {
 
   mounted() {
     this.id = `select-${Math.floor(Math.random() * 1000000)}`;
+
+    this.touch = Boolean("ontouchstart" in window || navigator.maxTouchPoints);
 
     this.activeOption =
       this.selectedItems.length > 0 ? this.selectedItems[0] : 0;
@@ -182,13 +202,19 @@ export default class Select extends Vue {
     this.away();
   }
 
+  @Watch("touchSelected")
+  public getSelectedTouchOption(): void {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(this.touchSelected);
+  }
+
   public handleEscClose(): void {
     this.toggle = false;
 
     this.focusInputField();
   }
 
-  handleKeydown(e: any): void {
+  public handleKeydown(e: any): void {
     this.activeOption =
       this.selectedItems.length > 0 ? this.selectedItems[0] : -1;
 
@@ -377,5 +403,26 @@ export default class Select extends Vue {
       color: rgba(0, 0, 0, 0.3);
     }
   }
+}
+
+select {
+  box-sizing: content-box;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
+  outline: 0;
+  box-shadow: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  width: 100%;
+  height: auto;
+  padding: 0.6rem 0 0.4rem 0;
+  margin: 0 0 0.5rem 0;
+}
+select:disabled,
+select[readonly] {
+  background-color: transparent;
+  border-bottom: 1px solid #bdbdbd;
 }
 </style>
